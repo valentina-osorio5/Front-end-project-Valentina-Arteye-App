@@ -10,8 +10,10 @@
 // }
 
 const $eyebutton = document.querySelector('.button-row') as HTMLDivElement;
+const
 
 // fetchRandomArtwork();
+
 
 async function fetchRandomArtwork(): Promise<any> {
   // {
@@ -54,7 +56,7 @@ async function fetchRandomArtwork(): Promise<any> {
         artist: artwork.artist_display,
         place: artwork.place_of_origin,
         description: artwork.description,
-        imageUrl,
+        imageUrl: imageUrl,
         medium: artwork.medium_display,
         display: artwork.catalogue_display,
       };
@@ -78,3 +80,57 @@ function handleEyeClick(event: Event): any {
     fetchRandomArtwork();
   }
 }
+
+// function renderArtwork(artworks){
+//   const div = document.createElement('div');
+//   div.className = 'one-fourth';
+
+//   const title = document.createElement('h2');
+//   title.textContent = artwork.title;
+//   div.appendChild(title);
+
+//   const artistName = document.createElement('h2');
+//   artistName.textContent = artwork.artist_display;
+//   div.appendChild(artistName);
+
+//   const place = document.createElement('p');
+//   place.textContent = artwork.place_of_origin;
+//   div.appendChild(place);
+
+//   const description = document.createElement('p');
+//   description.textContent = artwork.description;
+//   div.appendChild(description);
+
+//   const medium = document.createElement('p');
+//   medium.textContent= artwork.medium_display
+//   div.appendChild(medium);
+
+
+//   const display = document.createElement('p');
+//   if (artwork.catalogue_display === null){
+//   display.textContent = 'No';
+//   } else {
+//     display.textContent = artwork.catalogue_display
+//   }
+//   div.appendChild(display);
+
+
+//   const imageDiv = document.createElement('div');
+//   imageDiv.className = 'three-fourths';
+
+//   const image = document.createElement('img');
+//   image.setAttribute('src', imageUrl);
+//   imageDiv.appendChild(image);
+
+//   div.append(imageDiv);
+
+//   return div;
+// }
+
+// window.addEventListener('DOMContentLoaded', handleDCL);
+
+// function handleDCL(){
+//   console.log('page loaded');
+//   fetchRandomArtwork();
+//   console.log('fetchRandomArtwork called');
+// }
