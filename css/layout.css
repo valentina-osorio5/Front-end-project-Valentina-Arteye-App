@@ -1,0 +1,102 @@
+.container {
+  border: solid 3px red;
+  padding: 50px;
+
+  /* justify-self: center; */
+}
+
+.parent {
+  display: flex;
+  flex-direction: column; /* Stack items vertically by default */
+  align-items: center; /* Center-align the content */
+  gap: 20px; /* Add some spacing between text and image */
+}
+
+.header {
+  max-width: 100%;
+  border: solid 3px red;
+  display: flex;
+
+  /* justify-self: center; */
+}
+
+.menu {
+  align-items: flex-end;
+  padding: 50px;
+}
+
+.arteye {
+  align-items: flex-start;
+  float: left;
+  padding: 50px;
+  width: 100%;
+}
+
+.three-fourths {
+  width: 100%;
+  height: auto;
+
+  /* background-image: url('../images/frame\ smaller.png'); */
+  background-size: contain;
+  background-repeat: no-repeat;
+  border: solid 2px purple;
+}
+
+.one-fourth {
+  text-align: center;
+  flex-basis: 25%;
+}
+
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.bi,
+.bi-eye {
+  width: 70px;
+  height: 70px;
+}
+
+i {
+  font-size: 60px;
+  color: black;
+  width: 40px;
+  height: 40px;
+  float: right;
+
+  /* padding-left: 30px; */
+}
+
+.image-div img {
+  max-width: 90%;
+  align-items: center;
+  justify-items: center;
+  padding: 1.5rem;
+}
+
+.button-row {
+  justify-self: center;
+  display: flex;
+  border: 2px solid purple;
+}
+
+@media screen and (width >= 768px) {
+  .parent {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .one-fourth {
+    text-align: left;
+    flex-basis: 25%;
+  }
+
+  .three-fourths {
+    flex-basis: 75%;
+    max-width: 75%;
+    height: auto;
+    background-size: contain;
+  }
+}
