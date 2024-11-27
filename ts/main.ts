@@ -2,11 +2,11 @@ interface Artwork {
   id: string;
   title: string;
   artist: string;
-  place: string;
+  // place: string;
   description: string;
   imageUrl: string;
   medium: string;
-  display: any;
+  // display: any;
 }
 
 const $eyebutton = document.querySelector('.button-row') as HTMLDivElement;
@@ -14,7 +14,58 @@ const $insertRowContainer = document.querySelector(
   '.artwork-row',
 ) as HTMLDivElement;
 
-// fetchRandomArtwork();
+function renderArtwork(displayArtwork: any): any {
+  const outerDiv = document.createElement('div');
+  outerDiv.className = 'parent';
+
+  const imageContainerDiv = document.createElement('div');
+  imageContainerDiv.className = 'three-fourths';
+
+  const imageDiv = document.createElement('div');
+  imageDiv.className = 'image-div';
+  imageContainerDiv.appendChild(imageDiv);
+  outerDiv.append(imageContainerDiv);
+
+  const image = document.createElement('img');
+  image.setAttribute('src', displayArtwork.imageUrl);
+  image.setAttribute('alt', displayArtwork.title);
+  imageDiv.appendChild(image);
+
+  const div = document.createElement('div');
+  div.className = 'one-fourth';
+  outerDiv.append(div);
+
+  const title = document.createElement('h2');
+  title.textContent = displayArtwork.title;
+  div.appendChild(title);
+
+  const artistName = document.createElement('h2');
+  artistName.textContent = displayArtwork.artist;
+  div.appendChild(artistName);
+
+  // const place = document.createElement('p');
+  // place.textContent = displayArtwork.place;
+  // div.appendChild(place);
+
+  const description = document.createElement('p');
+  description.textContent = displayArtwork.description;
+  div.appendChild(description);
+
+  const medium = document.createElement('p');
+  medium.textContent = `Medium: ${displayArtwork.medium}`;
+  div.appendChild(medium);
+
+  // const display = document.createElement('p');
+  // if (displayArtwork.catalogue_display === 'null') {
+  //   display.textContent = 'On Display: No';
+  // } else {
+  //   display.textContent = `On Display: ${displayArtwork.display}`;
+  // }
+  // div.appendChild(display);
+
+  console.log(outerDiv);
+  return outerDiv;
+}
 
 async function fetchRandomArtwork(): Promise<any> {
   // {
@@ -51,23 +102,22 @@ async function fetchRandomArtwork(): Promise<any> {
 
       console.log('Title:', artwork.title);
       console.log('Artist:', artwork.artist_display);
-      console.log('Place of Origin:', artwork.place_of_origin);
       console.log('Description:', artwork.description);
       console.log('Image URL:', imageUrl);
       console.log('Medium:', artwork.medium_display);
-      console.log('On Display?', artwork.catalogue_display);
-      return {
+      const displayArtwork = {
         id: artwork.image_id,
         title: artwork.title,
         artist: artwork.artist_display,
-        place: artwork.place_of_origin,
+        // place: artwork.place_of_origin,
         description: artwork.description,
         imageUrl,
         medium: artwork.medium_display,
-        display: artwork.catalogue_display,
+        // display: artwork.catalogue_display,
       };
-    } else {
-      console.log('No artworks available.');
+      const outerDiv = renderArtwork(displayArtwork);
+      $insertRowContainer.append(outerDiv);
+      return displayArtwork;
     }
   } catch (error: any) {
     console.error('Error fetching artwork data:', error.message);
@@ -77,87 +127,31 @@ async function fetchRandomArtwork(): Promise<any> {
 $eyebutton?.addEventListener('click', handleEyeClick);
 
 function handleEyeClick(event: Event): any {
-  console.log('hi');
   const eventTarget = event.target as SVGElement;
-  console.log('eventTarget:', eventTarget.tagName);
   if (eventTarget === null) throw new Error();
   if (eventTarget.tagName === 'svg') {
     console.log('eye was clicked');
-    // $insertRowContainer.textContent= '';
+    $insertRowContainer.textContent = '';
     fetchRandomArtwork();
-    // renderArtwork();
   }
 }
 
-const artworkExample = {
-  id: '123',
-  title: 'title1',
-  artist: 'artist name',
-  place: 'place',
-  description: 'description',
-  imageUrl:
-    'https://images.unsplash.com/photo-1732613942657-61684c51eb55?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8',
-  medium: 'pic',
-  display: 'any',
-};
+// const artworkExample = {
+//   image_id: '123',
+//   title: 'title1',
+//   artist_display: 'artist name',
+//   place_of_origin: 'place',
+//   description: 'description',
+//   imageUrl:
+//     'https://images.unsplash.com/photo-1732613942657-61684c51eb55?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8',
+//   medium_display: 'pic',
+//   catalogue_display: null,
+// };
 
-function renderArtwork(artwork) {
-  const outerDiv = document.createElement('div');
+window.addEventListener('DOMContentLoaded', handleDCL);
 
-  const div = document.createElement('div');
-  div.className = 'one-fourth';
-  outerDiv.append(div);
-
-  const title = document.createElement('h2');
-  title.textContent = artwork.title;
-  div.appendChild(title);
-
-  const artistName = document.createElement('h2');
-  artistName.textContent = artwork.artist_display;
-  div.appendChild(artistName);
-
-  const place = document.createElement('p');
-  place.textContent = artwork.place_of_origin;
-  div.appendChild(place);
-
-  const description = document.createElement('p');
-  description.textContent = artwork.description;
-  div.appendChild(description);
-
-  const medium = document.createElement('p');
-  medium.textContent = artwork.medium_display;
-  div.appendChild(medium);
-
-  const display = document.createElement('p');
-  if (artwork.catalogue_display === null) {
-    display.textContent = 'No';
-  } else {
-    display.textContent = artwork.catalogue_display;
-  }
-  div.appendChild(display);
-
-  const imageDiv = document.createElement('div');
-  imageDiv.className = 'three-fourths';
-
-  const image = document.createElement('img');
-  image.setAttribute('src', artwork.imageUrl);
-  imageDiv.appendChild(image);
-
-  outerDiv.append(imageDiv);
-  // $insertRow.appendChild(div);
-
-  return outerDiv;
+function handleDCL(): void {
+  console.log('page loaded');
+  fetchRandomArtwork();
+  console.log('fetchRandomArtwork called');
 }
-
-// window.addEventListener('DOMContentLoaded', handleDCL);
-
-// function handleDCL(){
-//   console.log('page loaded');
-//   fetchRandomArtwork();
-//   console.log('fetchRandomArtwork called');
-// }
-
-// function replaceArtwork(){
-//   if
-
-// }

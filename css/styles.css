@@ -1,19 +1,51 @@
 h1 {
   font-family: 'Nova Round', serif;
   font-weight: 400;
-  font-size: 50px;
+  font-size: 2rem;
 }
 
 h2 {
   font-family: 'Nova Round', serif;
   font-weight: 400;
-  font-size: 36px;
+  font-size: 1.5rem;
 }
 
 p {
   font-family: 'Nova Round', serif;
   font-weight: 400;
-  font-size: 30px;
+  font-size: 1rem;
 }
 
+@media screen and (width >= 767px) {
+  h1 {
+    font-size: 3rem;
+  }
 
+  h2 {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 1.5rem;
+  }
+}
+
+@media screen and (width >= 1200px) {
+  h1 {
+    font-family: 'Nova Round', serif;
+    font-weight: 400;
+    font-size: 30px;
+  }
+
+  h2 {
+    font-family: 'Nova Round', serif;
+    font-weight: 400;
+    font-size: 30px;
+  }
+
+  p {
+    font-family: 'Nova Round', serif;
+    font-weight: 400;
+    font-size: 18px;
+  }
+}

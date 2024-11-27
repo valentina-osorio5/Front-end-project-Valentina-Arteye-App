@@ -1,9 +1,15 @@
 .container {
-  max-width: 1500px;
   border: solid 3px red;
   padding: 50px;
 
   /* justify-self: center; */
+}
+
+.parent {
+  display: flex;
+  flex-direction: column; /* Stack items vertically by default */
+  align-items: center; /* Center-align the content */
+  gap: 20px; /* Add some spacing between text and image */
 }
 
 .header {
@@ -27,50 +33,34 @@
 }
 
 .three-fourths {
-  flex-basis: 75%; /* Takes up the remaining 75% */
-  max-width: 75%; /* Prevents overflow beyond 75% */
-  height: 700px; /* Maintain original height */
-  display: flex; /* Enables flex properties */
-  align-items: center;
-  justify-content: center;
-  background-image: url('../images/frame\ smaller.png');
-  background-size: contain; /* Adjust the background scaling */
+  width: 100%;
+  height: auto;
+
+  /* background-image: url('../images/frame\ smaller.png'); */
+  background-size: contain;
   background-repeat: no-repeat;
+  border: solid 2px purple;
 }
 
 .one-fourth {
-  display: flex; /* Flexbox for stacking */
-  flex-direction: column; /* Stacks items vertically */
-  justify-content: flex-start; /* Align items to the top */
-  flex-basis: 25%; /* Takes up 25% of the row */
-  max-width: 25%; /* Prevents overflow beyond 25% */
-  padding: 20px; /* Optional: Adds some padding */
-  box-sizing: border-box; /* Includes padding in the width */
+  text-align: center;
+  flex-basis: 25%;
 }
 
 .row {
-  display: flex; /* Establishes a flex container */
-  flex-wrap: nowrap; /* Ensures the content doesn't wrap */
-}
-
-.button-row {
   display: flex;
-  border: 2px solid purple;
-  max-width: 500px;
+  flex-wrap: nowrap;
 }
 
 .bi,
 .bi-eye {
   width: 70px;
   height: 70px;
-
-  /* align-items: center;
-  justify-content: center; */
 }
 
 i {
   font-size: 60px;
-  font-color: black;
+  color: black;
   width: 40px;
   height: 40px;
   float: right;
@@ -78,16 +68,35 @@ i {
   /* padding-left: 30px; */
 }
 
-img {
-  max-width: 400px;
-
-  /* align-items: center;
-  justify-items: center; */
-  justify-self: center;
+.image-div img {
+  max-width: 90%;
+  align-items: center;
+  justify-items: center;
+  padding: 1.5rem;
 }
 
 .button-row {
-  max-width: 500px;
   justify-self: center;
   display: flex;
+  border: 2px solid purple;
+}
+
+@media screen and (width >= 768px) {
+  .parent {
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 40px;
+  }
+
+  .one-fourth {
+    text-align: left;
+    flex-basis: 25%;
+  }
+
+  .three-fourths {
+    flex-basis: 75%;
+    max-width: 75%;
+    height: auto;
+    background-size: contain;
+  }
 }
