@@ -2,11 +2,9 @@ interface Artwork {
   id: string;
   title: string;
   artist: string;
-  // place: string;
   description: string;
   imageUrl: string;
   medium: string;
-  // display: any;
 }
 
 const $eyebutton = document.querySelector('.button-row') as HTMLDivElement;
@@ -43,10 +41,6 @@ function renderArtwork(displayArtwork: any): any {
   artistName.textContent = displayArtwork.artist;
   div.appendChild(artistName);
 
-  // const place = document.createElement('p');
-  // place.textContent = displayArtwork.place;
-  // div.appendChild(place);
-
   const description = document.createElement('p');
   description.textContent = displayArtwork.description;
   div.appendChild(description);
@@ -55,15 +49,6 @@ function renderArtwork(displayArtwork: any): any {
   medium.textContent = `Medium: ${displayArtwork.medium}`;
   div.appendChild(medium);
 
-  // const display = document.createElement('p');
-  // if (displayArtwork.catalogue_display === 'null') {
-  //   display.textContent = 'On Display: No';
-  // } else {
-  //   display.textContent = `On Display: ${displayArtwork.display}`;
-  // }
-  // div.appendChild(display);
-
-  console.log(outerDiv);
   return outerDiv;
 }
 
@@ -95,25 +80,17 @@ async function fetchRandomArtwork(): Promise<any> {
       const artwork = artworks[randomIndex];
       const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`;
       if (!artwork.image_id) {
-        console.log('image is null');
         fetchRandomArtwork();
         return;
       }
 
-      console.log('Title:', artwork.title);
-      console.log('Artist:', artwork.artist_display);
-      console.log('Description:', artwork.description);
-      console.log('Image URL:', imageUrl);
-      console.log('Medium:', artwork.medium_display);
       const displayArtwork = {
         id: artwork.image_id,
         title: artwork.title,
         artist: artwork.artist_display,
-        // place: artwork.place_of_origin,
         description: artwork.description,
         imageUrl,
         medium: artwork.medium_display,
-        // display: artwork.catalogue_display,
       };
       const outerDiv = renderArtwork(displayArtwork);
       $insertRowContainer.append(outerDiv);
@@ -130,28 +107,13 @@ function handleEyeClick(event: Event): any {
   const eventTarget = event.target as SVGElement;
   if (eventTarget === null) throw new Error();
   if (eventTarget.tagName === 'svg') {
-    console.log('eye was clicked');
     $insertRowContainer.textContent = '';
     fetchRandomArtwork();
   }
 }
 
-// const artworkExample = {
-//   image_id: '123',
-//   title: 'title1',
-//   artist_display: 'artist name',
-//   place_of_origin: 'place',
-//   description: 'description',
-//   imageUrl:
-//     'https://images.unsplash.com/photo-1732613942657-61684c51eb55?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHw0fHx8ZW58MHx8fHx8',
-//   medium_display: 'pic',
-//   catalogue_display: null,
-// };
-
 window.addEventListener('DOMContentLoaded', handleDCL);
 
 function handleDCL(): void {
-  console.log('page loaded');
   fetchRandomArtwork();
-  console.log('fetchRandomArtwork called');
 }
