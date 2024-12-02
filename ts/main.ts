@@ -115,15 +115,22 @@ function handleEyeClick(event: Event): any {
 
 window.addEventListener('DOMContentLoaded', handleDCL);
 
-
 function handleDCL(): void {
   fetchRandomArtwork();
 }
 
 $heartButton?.addEventListener('click', handleHeartClick);
 
-function handleHeartClick(event:Event):void{
+function handleHeartClick(event: Event): void {
   console.log('heart button clicked');
   saveToLocalStorage();
+}
 
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+
+}
+
+function closeNav() {
+  document.getElementById('mySidenav').style.width = '0';
 }

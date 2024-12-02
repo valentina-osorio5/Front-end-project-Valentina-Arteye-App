@@ -96,3 +96,9 @@ function handleHeartClick(event) {
     console.log('heart button clicked');
     saveToLocalStorage();
 }
+function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+}
+function closeNav() {
+    document.getElementById('mySidenav').style.width = '0';
+}
