@@ -1,3 +1,7 @@
+.hidden{
+  display: none !important;
+}
+
 .container {
   border: solid 3px red;
   padding: 50px;

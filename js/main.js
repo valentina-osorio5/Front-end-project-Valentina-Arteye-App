@@ -1,7 +1,10 @@
 "use strict";
+let displayArtwork;
 const $eyebutton = document.querySelector('.button-row');
 const $insertRowContainer = document.querySelector('.artwork-row');
-const $heartButton = document.querySelector('.heart');
+const $heartButton = document.querySelector('.fa-heart');
+const $holdsNoSaved = document.querySelector('.holds-no-saved');
+const $arteyeButton = document.querySelector('.btn');
 function renderArtwork(displayArtwork) {
     const outerDiv = document.createElement('div');
     outerDiv.className = 'parent';
@@ -60,7 +63,7 @@ async function fetchRandomArtwork() {
                 fetchRandomArtwork();
                 return;
             }
-            const displayArtwork = {
+            displayArtwork = {
                 id: artwork.image_id,
                 title: artwork.title,
                 artist: artwork.artist_display,
@@ -92,13 +95,53 @@ function handleDCL() {
     fetchRandomArtwork();
 }
 $heartButton?.addEventListener('click', handleHeartClick);
-function handleHeartClick(event) {
+function handleHeartClick() {
     console.log('heart button clicked');
+    console.log(displayArtwork);
+    // create Object with the properties we need
+    const artwork = {
+        id: displayArtwork.id,
+        title: displayArtwork.title,
+        artist: displayArtwork.artist,
+        description: displayArtwork.description,
+        imageUrl: displayArtwork.imageUrl,
+        medium: displayArtwork.medium,
+    };
+    data.savedArtworks.push(artwork);
     saveToLocalStorage();
 }
 function openNav() {
-    document.getElementById("mySidenav").style.width = "250px";
+    document.getElementById('mySidenav').style.width = '250px';
 }
 function closeNav() {
     document.getElementById('mySidenav').style.width = '0';
 }
+function viewSwap(viewName) {
+    const homeView = document.getElementById('home-view');
+    const savedView = document.getElementById('saved');
+    //   // Hide or show the appropriate view based on viewName
+    if (viewName === 'home') {
+        homeView?.classList.remove('hidden');
+        savedView?.classList.add('hidden');
+    }
+    else if (viewName === 'saved') {
+        savedView?.classList.remove('hidden');
+        homeView?.classList.add('hidden');
+    }
+    // Update the view in the data model
+    data.currentView = viewName;
+    toggleNoSaved();
+}
+function toggleNoSaved() {
+    if (data.savedArtworks.length === 0) {
+        $holdsNoSaved?.classList.remove('hidden');
+    }
+    else {
+        $holdsNoSaved?.classList.add('hidden');
+    }
+}
+function handleArteyeClick() {
+    console.log('arteye was clicked');
+    viewSwap('home');
+}
+$arteyeButton?.addEventListener('click', handleArteyeClick);

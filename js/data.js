@@ -6,5 +6,5 @@ const data = {
     currentView: 'home',
 };
 function saveToLocalStorage() {
-    localStorage.setItem(key, JSON.stringify(data.savedArtworks));
+    localStorage.setItem(key, JSON.stringify(data));
 }

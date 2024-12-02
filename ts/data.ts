@@ -14,8 +14,6 @@ const data = {
   currentView: 'home',
 };
 
-function saveToLocalStorage():void {
-  localStorage.setItem(key, JSON.stringify(data.savedArtworks));
+function saveToLocalStorage(): void {
+  localStorage.setItem(key, JSON.stringify(data));
 }
-
-
