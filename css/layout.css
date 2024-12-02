@@ -20,6 +20,13 @@
   /* justify-self: center; */
 }
 
+.heart {
+  width: 35px;
+  height: 35px;
+
+  /* color: #a0144c; */
+}
+
 .menu {
   align-items: flex-end;
   padding: 50px;

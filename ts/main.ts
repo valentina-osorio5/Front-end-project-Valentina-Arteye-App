@@ -11,6 +11,7 @@ const $eyebutton = document.querySelector('.button-row') as HTMLDivElement;
 const $insertRowContainer = document.querySelector(
   '.artwork-row',
 ) as HTMLDivElement;
+const $heartButton = document.querySelector('.heart');
 
 function renderArtwork(displayArtwork: any): any {
   const outerDiv = document.createElement('div');
@@ -114,6 +115,15 @@ function handleEyeClick(event: Event): any {
 
 window.addEventListener('DOMContentLoaded', handleDCL);
 
+
 function handleDCL(): void {
   fetchRandomArtwork();
+}
+
+$heartButton?.addEventListener('click', handleHeartClick);
+
+function handleHeartClick(event:Event):void{
+  console.log('heart button clicked');
+  saveToLocalStorage();
+
 }
