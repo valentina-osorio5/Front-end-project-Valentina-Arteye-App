@@ -6,15 +6,15 @@ interface Artwork {
   imageUrl: string;
   medium: string;
 }
-let displayArtwork;
+let displayArtwork: Artwork;
 
 const $eyebutton = document.querySelector('.button-row') as HTMLDivElement;
 const $insertRowContainer = document.querySelector(
   '.artwork-row',
 ) as HTMLDivElement;
-const $heartButton = document.querySelector('.fa-heart');
 const $holdsNoSaved = document.querySelector('.holds-no-saved');
 const $arteyeButton = document.querySelector('.btn');
+const $uList = document?.querySelector('ul');
 
 function renderArtwork(displayArtwork: any): any {
   const outerDiv = document.createElement('div');
@@ -52,6 +52,10 @@ function renderArtwork(displayArtwork: any): any {
   const medium = document.createElement('p');
   medium.textContent = `Medium: ${displayArtwork.medium}`;
   div.appendChild(medium);
+
+  const heart = document.createElement('i');
+  heart.className = 'fa-regular fa-heart';
+  div.appendChild(heart);
 
   return outerDiv;
 }
@@ -111,7 +115,8 @@ function handleEyeClick(event: Event): any {
   const eventTarget = event.target as SVGElement;
   if (eventTarget === null) throw new Error();
   if (eventTarget.tagName === 'svg') {
-    $heartButton.className = 'fa-regular fa-heart'
+    const $heartButton = document.querySelector('.fa-heart');
+    $heartButton.className = 'fa-regular fa-heart';
     $insertRowContainer.textContent = '';
     fetchRandomArtwork();
   }
@@ -121,26 +126,35 @@ window.addEventListener('DOMContentLoaded', handleDCL);
 
 function handleDCL(): void {
   fetchRandomArtwork();
-  $heartButton.className = 'fa-regular fa-heart'
+  const $heartButton = document.querySelector('.fa-heart');
+  if (!$heartButton) throw new Error('$heartButton does not exist');
+  $heartButton.className = 'fa-regular fa-heart';
 }
 
-$heartButton?.addEventListener('click', handleHeartClick);
+$insertRowContainer?.addEventListener('click', handleHeartClick);
 
-function handleHeartClick(): void {
-  console.log('heart button clicked');
-  // console.log(displayArtwork);
-  $heartButton.className = 'fa-solid fa-heart';
-  // create Object with the properties we need
-  // const artwork = {
-  //   id: displayArtwork.id,
-  //   title: displayArtwork.title,
-  //   artist: displayArtwork.artist,
-  //   description: displayArtwork.description,
-  //   imageUrl: displayArtwork.imageUrl,
-  //   medium: displayArtwork.medium,
-  // };
-  data.savedArtworks.push(displayArtwork);
-  saveToLocalStorage();
+function handleHeartClick(event: Event): void {
+  const eventTarget = event.target as HTMLElement;
+  if (eventTarget.className === 'fa-regular fa-heart') {
+    console.log('heart button clicked');
+    // console.log(displayArtwork);
+    const $heartButton = document.querySelector('.fa-heart');
+
+    if (!$heartButton) throw new Error('$heartButton does not exist');
+    $heartButton.className = 'fa-solid fa-heart';
+    // create Object with the properties we need
+    const artwork = {
+      id: displayArtwork.id,
+      title: displayArtwork.title,
+      artist: displayArtwork.artist,
+      description: displayArtwork.description,
+      imageUrl: displayArtwork.imageUrl,
+      medium: displayArtwork.medium,
+    };
+    // data.savedArtworks.push(displayArtwork);
+    data.savedArtworks.push(artwork);
+    saveToLocalStorage();
+  }
 }
 
 function openNav() {
@@ -169,7 +183,8 @@ function viewSwap(viewName: 'home' | 'saved'): void {
 }
 
 function toggleNoSaved(): void {
-  if (data.savedArtworks.length === 0) {
+  const localStorageArtwork = getFromLocalStorage();
+  if (localStorageArtwork.savedArtworks.length === 0) {
     $holdsNoSaved?.classList.remove('hidden');
   } else {
     $holdsNoSaved?.classList.add('hidden');
@@ -182,3 +197,34 @@ function handleArteyeClick(): void {
 }
 
 $arteyeButton?.addEventListener('click', handleArteyeClick);
+
+function renderSavedArtworks() {
+  const localStorageArtwork = getFromLocalStorage();
+  console.log(localStorageArtwork.savedArtworks);
+  for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
+    console.log(localStorageArtwork.savedArtworks);
+    const listItem = document.createElement('li');
+    listItem.className = 'list-item';
+
+    const title = document.createElement('h2');
+    title.textContent = localStorageArtwork.savedArtworks[i].title;
+    listItem.appendChild(title);
+
+    const artistName = document.createElement('h2');
+    artistName.textContent = localStorageArtwork.savedArtworks[i].artist;
+    listItem.appendChild(artistName);
+
+    const heart = document.createElement('i');
+    heart.className = 'fa-solid fa-heart';
+    listItem.appendChild(heart);
+
+    const image = document.createElement('img');
+    image.setAttribute('src', localStorageArtwork.savedArtworks[i].imageUrl);
+    image.setAttribute('alt', localStorageArtwork.savedArtworks[i].title);
+    // return listItem;
+
+    $uList?.append(listItem);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', renderSavedArtworks);

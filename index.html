@@ -22,7 +22,7 @@
   </head>
   <body>
     <div class="container">
-      <div data-view="home" id="home-view" class="">
+      <div data-view="home" id="home-view" class="hidden">
         <div class="header">
           <h1 class="arteye">ARTEYE</h1>
           <h2 class="menu"><span onclick="openNav()">MENU</span></h2>
@@ -50,16 +50,14 @@
               d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
           </svg>
         </div>
-        <div class="button-row">
-          <i class="fa-regular fa-heart"></i>
-        </div>
+        <div class="button-row"></div>
       </div>
-      <div data-view="saved" id="saved" class="dataviewsaved hidden">
+      <div data-view="saved" id="saved" class="dataviewsaved">
         <div class="header">
           <h1 class="arteye">SAVED</h1>
           <h2 class="menu btn">ARTEYE</h2>
         </div>
-        <div class="column-full holds-no-saved">
+        <div class="holds-no-saved">
           <p class="no-saved">
             No pieces saved yet. <br />Heart an art piece to add to saved.
           </p>

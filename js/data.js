@@ -8,3 +8,8 @@ const data = {
 function saveToLocalStorage() {
     localStorage.setItem(key, JSON.stringify(data));
 }
+function getFromLocalStorage() {
+    const localStorageJSON = localStorage.getItem(key);
+    const data = JSON.parse(localStorageJSON);
+    return data;
+}

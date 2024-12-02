@@ -1,4 +1,4 @@
-.hidden{
+.hidden {
   display: none !important;
 }
 
@@ -7,6 +7,21 @@
   padding: 50px;
 
   /* justify-self: center; */
+}
+
+.list-item h2 {
+  /* display: inline-flex;
+  /* align-items: center; */
+
+  /* margin: 0; */
+}
+
+li {
+  list-style: none;
+}
+
+.list-item img {
+  width: 50%;
 }
 
 .parent {
@@ -25,13 +40,12 @@
 }
 
 .fa-heart {
-  width: 35px;
-  height: 35px;
-
-  /* color: #a0144c; */
+  font-size: 35px;
+  display: flex;
+  justify-self: center;
 }
 
-.fa-solid{
+.fa-solid {
   color: #a0144c;
 }
 
@@ -73,16 +87,6 @@
   height: 70px;
 }
 
-i {
-  font-size: 60px;
-  color: black;
-  width: 40px;
-  height: 40px;
-  float: right;
-
-  /* padding-left: 30px; */
-}
-
 .image-div img {
   max-width: 90%;
   align-items: center;
@@ -93,7 +97,8 @@ i {
 .button-row {
   justify-self: center;
   display: flex;
-  border: 2px solid purple;
+
+  /* border: 2px solid purple; */
 }
 
 @media screen and (width >= 768px) {
