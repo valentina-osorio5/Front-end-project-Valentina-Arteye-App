@@ -86,6 +86,7 @@ function handleEyeClick(event) {
     if (eventTarget === null)
         throw new Error();
     if (eventTarget.tagName === 'svg') {
+        $heartButton.className = 'fa-regular fa-heart';
         $insertRowContainer.textContent = '';
         fetchRandomArtwork();
     }
@@ -93,21 +94,23 @@ function handleEyeClick(event) {
 window.addEventListener('DOMContentLoaded', handleDCL);
 function handleDCL() {
     fetchRandomArtwork();
+    $heartButton.className = 'fa-regular fa-heart';
 }
 $heartButton?.addEventListener('click', handleHeartClick);
 function handleHeartClick() {
     console.log('heart button clicked');
-    console.log(displayArtwork);
+    // console.log(displayArtwork);
+    $heartButton.className = 'fa-solid fa-heart';
     // create Object with the properties we need
-    const artwork = {
-        id: displayArtwork.id,
-        title: displayArtwork.title,
-        artist: displayArtwork.artist,
-        description: displayArtwork.description,
-        imageUrl: displayArtwork.imageUrl,
-        medium: displayArtwork.medium,
-    };
-    data.savedArtworks.push(artwork);
+    // const artwork = {
+    //   id: displayArtwork.id,
+    //   title: displayArtwork.title,
+    //   artist: displayArtwork.artist,
+    //   description: displayArtwork.description,
+    //   imageUrl: displayArtwork.imageUrl,
+    //   medium: displayArtwork.medium,
+    // };
+    data.savedArtworks.push(displayArtwork);
     saveToLocalStorage();
 }
 function openNav() {

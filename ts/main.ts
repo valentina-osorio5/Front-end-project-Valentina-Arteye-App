@@ -111,6 +111,7 @@ function handleEyeClick(event: Event): any {
   const eventTarget = event.target as SVGElement;
   if (eventTarget === null) throw new Error();
   if (eventTarget.tagName === 'svg') {
+    $heartButton.className = 'fa-regular fa-heart'
     $insertRowContainer.textContent = '';
     fetchRandomArtwork();
   }
@@ -120,23 +121,25 @@ window.addEventListener('DOMContentLoaded', handleDCL);
 
 function handleDCL(): void {
   fetchRandomArtwork();
+  $heartButton.className = 'fa-regular fa-heart'
 }
 
 $heartButton?.addEventListener('click', handleHeartClick);
 
 function handleHeartClick(): void {
   console.log('heart button clicked');
-  console.log(displayArtwork);
+  // console.log(displayArtwork);
+  $heartButton.className = 'fa-solid fa-heart';
   // create Object with the properties we need
-  const artwork = {
-    id: displayArtwork.id,
-    title: displayArtwork.title,
-    artist: displayArtwork.artist,
-    description: displayArtwork.description,
-    imageUrl: displayArtwork.imageUrl,
-    medium: displayArtwork.medium,
-  };
-  data.savedArtworks.push(artwork);
+  // const artwork = {
+  //   id: displayArtwork.id,
+  //   title: displayArtwork.title,
+  //   artist: displayArtwork.artist,
+  //   description: displayArtwork.description,
+  //   imageUrl: displayArtwork.imageUrl,
+  //   medium: displayArtwork.medium,
+  // };
+  data.savedArtworks.push(displayArtwork);
   saveToLocalStorage();
 }
 

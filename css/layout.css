@@ -24,11 +24,15 @@
   /* justify-self: center; */
 }
 
-.heart {
+.fa-heart {
   width: 35px;
   height: 35px;
 
   /* color: #a0144c; */
+}
+
+.fa-solid{
+  color: #a0144c;
 }
 
 .menu {
