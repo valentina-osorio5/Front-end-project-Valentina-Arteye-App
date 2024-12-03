@@ -138,7 +138,6 @@ function handleHeartClick(event: Event): void {
   const eventTarget = event.target as HTMLElement;
   if (eventTarget.className === 'fa-regular fa-heart') {
     console.log('heart button clicked');
-    // console.log(displayArtwork);
     const $heartButton = document.querySelector('.fa-heart');
     if (!$heartButton) throw new Error('$heartButton does not exist');
     $heartButton.className = 'fa-solid fa-heart';
