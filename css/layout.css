@@ -1,23 +1,73 @@
-.container {
-  border: solid 3px red;
-  padding: 50px;
+.hidden {
+  display: none !important;
+}
 
-  /* justify-self: center; */
+.container {
+  padding: 50px;
+}
+
+li {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+a {
+  color: white;
+  font-family: 'Nova Round', serif;
+  font-size: 2rem;
+}
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.list-item .text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.list-item h2 {
+  margin: 5px 0;
+}
+
+.list-item .fa-heart {
+  margin: 10px;
+}
+
+.list-item img {
+  width: 25%;
+  height: auto;
 }
 
 .parent {
   display: flex;
-  flex-direction: column; /* Stack items vertically by default */
-  align-items: center; /* Center-align the content */
-  gap: 20px; /* Add some spacing between text and image */
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .header {
   max-width: 100%;
-  border: solid 3px red;
+  border-bottom: 2px solid #ccc;
   display: flex;
+}
 
-  /* justify-self: center; */
+.fa-heart {
+  font-size: 35px;
+  display: flex;
+  justify-self: center;
+}
+
+.fa-solid {
+  color: #a0144c;
 }
 
 .menu {
@@ -35,11 +85,8 @@
 .three-fourths {
   width: 100%;
   height: auto;
-
-  /* background-image: url('../images/frame\ smaller.png'); */
   background-size: contain;
   background-repeat: no-repeat;
-  border: solid 2px purple;
 }
 
 .one-fourth {
@@ -58,16 +105,6 @@
   height: 70px;
 }
 
-i {
-  font-size: 60px;
-  color: black;
-  width: 40px;
-  height: 40px;
-  float: right;
-
-  /* padding-left: 30px; */
-}
-
 .image-div img {
   max-width: 90%;
   align-items: center;
@@ -78,7 +115,6 @@ i {
 .button-row {
   justify-self: center;
   display: flex;
-  border: 2px solid purple;
 }
 
 @media screen and (width >= 768px) {
