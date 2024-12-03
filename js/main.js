@@ -5,6 +5,7 @@ const $insertRowContainer = document.querySelector('.artwork-row');
 const $holdsNoSaved = document.querySelector('.holds-no-saved');
 const $arteyeButton = document.querySelector('.btn');
 const $uList = document?.querySelector('ul');
+const $saveButton = document.querySelector('.saved-btn');
 function renderArtwork(displayArtwork) {
     const outerDiv = document.createElement('div');
     outerDiv.className = 'parent';
@@ -90,18 +91,23 @@ function handleEyeClick(event) {
         throw new Error();
     if (eventTarget.tagName === 'svg') {
         const $heartButton = document.querySelector('.fa-heart');
+        if (!$heartButton)
+            throw new Error('$heartButton does not exist');
         $heartButton.className = 'fa-regular fa-heart';
         $insertRowContainer.textContent = '';
         fetchRandomArtwork();
     }
 }
 window.addEventListener('DOMContentLoaded', handleDCL);
+// maybe add to the viewswap function
 function handleDCL() {
-    fetchRandomArtwork();
-    const $heartButton = document.querySelector('.fa-heart');
-    if (!$heartButton)
-        throw new Error('$heartButton does not exist');
-    $heartButton.className = 'fa-regular fa-heart';
+    if (data.currentView === 'home') {
+        fetchRandomArtwork();
+        const $heartButton = document.querySelector('.fa-heart');
+        if (!$heartButton)
+            throw new Error('$heartButton does not exist');
+        $heartButton.className = 'fa-regular fa-heart';
+    }
 }
 $insertRowContainer?.addEventListener('click', handleHeartClick);
 function handleHeartClick(event) {
@@ -187,3 +193,9 @@ function renderSavedArtworks() {
     }
 }
 document.addEventListener('DOMContentLoaded', renderSavedArtworks);
+$saveButton?.addEventListener('click', handleSavedView);
+function handleSavedView() {
+    console.log('save view clicked');
+    viewSwap('saved');
+    toggleNoSaved();
+}

@@ -15,6 +15,7 @@ const $insertRowContainer = document.querySelector(
 const $holdsNoSaved = document.querySelector('.holds-no-saved');
 const $arteyeButton = document.querySelector('.btn');
 const $uList = document?.querySelector('ul');
+const $saveButton = document.querySelector('.saved-btn');
 
 function renderArtwork(displayArtwork: any): any {
   const outerDiv = document.createElement('div');
@@ -116,6 +117,7 @@ function handleEyeClick(event: Event): any {
   if (eventTarget === null) throw new Error();
   if (eventTarget.tagName === 'svg') {
     const $heartButton = document.querySelector('.fa-heart');
+    if (!$heartButton) throw new Error('$heartButton does not exist');
     $heartButton.className = 'fa-regular fa-heart';
     $insertRowContainer.textContent = '';
     fetchRandomArtwork();
@@ -124,11 +126,14 @@ function handleEyeClick(event: Event): any {
 
 window.addEventListener('DOMContentLoaded', handleDCL);
 
+// maybe add to the viewswap function
 function handleDCL(): void {
-  fetchRandomArtwork();
-  const $heartButton = document.querySelector('.fa-heart');
-  if (!$heartButton) throw new Error('$heartButton does not exist');
-  $heartButton.className = 'fa-regular fa-heart';
+  if (data.currentView === 'home') {
+    fetchRandomArtwork();
+    const $heartButton = document.querySelector('.fa-heart');
+    if (!$heartButton) throw new Error('$heartButton does not exist');
+    $heartButton.className = 'fa-regular fa-heart';
+  }
 }
 
 $insertRowContainer?.addEventListener('click', handleHeartClick);
@@ -139,7 +144,6 @@ function handleHeartClick(event: Event): void {
     console.log('heart button clicked');
     // console.log(displayArtwork);
     const $heartButton = document.querySelector('.fa-heart');
-
     if (!$heartButton) throw new Error('$heartButton does not exist');
     $heartButton.className = 'fa-solid fa-heart';
     // create Object with the properties we need
@@ -198,7 +202,7 @@ function handleArteyeClick(): void {
 
 $arteyeButton?.addEventListener('click', handleArteyeClick);
 
-function renderSavedArtworks() {
+function renderSavedArtworks(): void {
   const localStorageArtwork = getFromLocalStorage();
   console.log(localStorageArtwork.savedArtworks);
   for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
@@ -228,3 +232,11 @@ function renderSavedArtworks() {
 }
 
 document.addEventListener('DOMContentLoaded', renderSavedArtworks);
+
+$saveButton?.addEventListener('click', handleSavedView);
+
+function handleSavedView(): void {
+  console.log('save view clicked');
+  viewSwap('saved');
+  toggleNoSaved();
+}
