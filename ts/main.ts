@@ -16,6 +16,7 @@ const $holdsNoSaved = document.querySelector('.holds-no-saved');
 const $arteyeButton = document.querySelector('.btn');
 const $uList = document?.querySelector('ul');
 const $saveButton = document.querySelector('.saved-btn');
+const $dialog = document.querySelector('.dialog') as HTMLDialogElement;
 
 function renderArtwork(displayArtwork: any): any {
   const outerDiv = document.createElement('div');
@@ -121,23 +122,32 @@ function handleDCL(): void {
 
 $insertRowContainer?.addEventListener('click', handleHeartClick);
 
+let totalClicks = 0;
+
 function handleHeartClick(event: Event): void {
-  const eventTarget = event.target as HTMLElement;
-  if (eventTarget.className === 'fa-regular fa-heart') {
-    const $heartButton = document.querySelector('.fa-heart');
-    if (!$heartButton) throw new Error('$heartButton does not exist');
-    $heartButton.className = 'fa-solid fa-heart';
-    // create Object with the properties we need
-    const artwork = {
-      id: displayArtwork.id,
-      title: displayArtwork.title,
-      artist: displayArtwork.artist,
-      description: displayArtwork.description,
-      imageUrl: displayArtwork.imageUrl,
-      medium: displayArtwork.medium,
-    };
-    data.savedArtworks.push(artwork);
-    saveToLocalStorage();
+  totalClicks++;
+  console.log('totalClicks', totalClicks);
+  if (totalClicks % 2 === 0) {
+    $dialog?.showModal();
+    console.log('modal is supposed to show');
+  } else {
+    const eventTarget = event.target as HTMLElement;
+    if (eventTarget.className === 'fa-regular fa-heart') {
+      const $heartButton = document.querySelector('.fa-heart');
+      if (!$heartButton) throw new Error('$heartButton does not exist');
+      $heartButton.className = 'fa-solid fa-heart';
+      // create Object with the properties we need
+      const artwork = {
+        id: displayArtwork.id,
+        title: displayArtwork.title,
+        artist: displayArtwork.artist,
+        description: displayArtwork.description,
+        imageUrl: displayArtwork.imageUrl,
+        medium: displayArtwork.medium,
+      };
+      data.savedArtworks.push(artwork);
+      saveToLocalStorage();
+    }
   }
 }
 

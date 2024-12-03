@@ -52,6 +52,33 @@ p {
   margin-left: 50px;
 }
 
+.modal-text {
+  width: 100%;
+  font-size: 2rem;
+}
+
+.dialog {
+  width: 600px;
+  border: 1 px black;
+  border-radius: 10px;
+  background-color: #359e89;
+}
+
+.cancel-delete {
+  background-color: #a0144c;
+  color: white;
+  float: right;
+  font-size: 25px;
+  border-radius: 7px;
+}
+
+.confirm-delete {
+  background-color: #3c9e20;
+  color: white;
+  font-size: 25px;
+  border-radius: 7px;
+}
+
 @media screen and (height <= 450px) {
   .sidenav {
     padding-top: 15px;

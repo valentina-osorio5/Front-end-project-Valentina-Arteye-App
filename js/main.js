@@ -6,6 +6,7 @@ const $holdsNoSaved = document.querySelector('.holds-no-saved');
 const $arteyeButton = document.querySelector('.btn');
 const $uList = document?.querySelector('ul');
 const $saveButton = document.querySelector('.saved-btn');
+const $dialog = document.querySelector('.dialog');
 function renderArtwork(displayArtwork) {
     const outerDiv = document.createElement('div');
     outerDiv.className = 'parent';
@@ -40,16 +41,6 @@ function renderArtwork(displayArtwork) {
     return outerDiv;
 }
 async function fetchRandomArtwork() {
-    // {
-    //   id: string;
-    //   title: string;
-    //   artist: string;
-    //   place: string;
-    //   description: string;
-    //   imageUrl: string;
-    //   medium: string;
-    //   display: any;
-    // }[]
     const apiUrl = `https://api.artic.edu/api/v1/artworks?page=1&limit=100`;
     try {
         const response = await fetch(apiUrl);
@@ -86,7 +77,6 @@ async function fetchRandomArtwork() {
 }
 $eyebutton?.addEventListener('click', handleEyeClick);
 function handleEyeClick(event) {
-    console.log('handleEyeClicked');
     const eventTarget = event.target;
     if (eventTarget === null)
         throw new Error();
@@ -96,33 +86,39 @@ function handleEyeClick(event) {
     }
 }
 window.addEventListener('DOMContentLoaded', handleDCL);
-// maybe add to the viewswap function
 function handleDCL() {
     if (data.currentView === 'home') {
         fetchRandomArtwork();
     }
 }
 $insertRowContainer?.addEventListener('click', handleHeartClick);
+let totalClicks = 0;
 function handleHeartClick(event) {
-    console.log('handleheartclick');
-    const eventTarget = event.target;
-    if (eventTarget.className === 'fa-regular fa-heart') {
-        console.log('heart button clicked');
-        const $heartButton = document.querySelector('.fa-heart');
-        if (!$heartButton)
-            throw new Error('$heartButton does not exist');
-        $heartButton.className = 'fa-solid fa-heart';
-        // create Object with the properties we need
-        const artwork = {
-            id: displayArtwork.id,
-            title: displayArtwork.title,
-            artist: displayArtwork.artist,
-            description: displayArtwork.description,
-            imageUrl: displayArtwork.imageUrl,
-            medium: displayArtwork.medium,
-        };
-        data.savedArtworks.push(artwork);
-        saveToLocalStorage();
+    totalClicks++;
+    console.log('totalClicks', totalClicks);
+    if (totalClicks % 2 === 0) {
+        $dialog?.showModal();
+        console.log('modal is supposed to show');
+    }
+    else {
+        const eventTarget = event.target;
+        if (eventTarget.className === 'fa-regular fa-heart') {
+            const $heartButton = document.querySelector('.fa-heart');
+            if (!$heartButton)
+                throw new Error('$heartButton does not exist');
+            $heartButton.className = 'fa-solid fa-heart';
+            // create Object with the properties we need
+            const artwork = {
+                id: displayArtwork.id,
+                title: displayArtwork.title,
+                artist: displayArtwork.artist,
+                description: displayArtwork.description,
+                imageUrl: displayArtwork.imageUrl,
+                medium: displayArtwork.medium,
+            };
+            data.savedArtworks.push(artwork);
+            saveToLocalStorage();
+        }
     }
 }
 function openNav() {
@@ -157,16 +153,13 @@ function toggleNoSaved() {
     }
 }
 function handleHomeClick() {
-    console.log('arteye/home was clicked');
     viewSwap('home');
     closeNav();
 }
 $arteyeButton?.addEventListener('click', handleHomeClick);
 function renderSavedArtworks() {
     const localStorageArtwork = getFromLocalStorage();
-    console.log(localStorageArtwork.savedArtworks);
     for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
-        console.log(localStorageArtwork.savedArtworks[i]);
         const listItem = document.createElement('li');
         listItem.className = 'list-item';
         const title = document.createElement('h2');
@@ -189,7 +182,6 @@ function renderSavedArtworks() {
 document.addEventListener('DOMContentLoaded', renderSavedArtworks);
 $saveButton?.addEventListener('click', handleSavedView);
 function handleSavedView() {
-    console.log('save view clicked');
     viewSwap('saved');
     renderViewSwapSavedArtworks();
     toggleNoSaved();
@@ -197,9 +189,7 @@ function handleSavedView() {
 function renderViewSwapSavedArtworks() {
     $uList.textContent = '';
     const localStorageArtwork = getFromLocalStorage();
-    console.log(localStorageArtwork.savedArtworks);
     for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
-        console.log(localStorageArtwork.savedArtworks[i]);
         const listItem = document.createElement('li');
         listItem.className = 'list-item';
         const title = document.createElement('h2');
