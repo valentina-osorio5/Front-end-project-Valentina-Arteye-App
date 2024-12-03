@@ -6,11 +6,16 @@ interface Artwork {
   imageUrl: string;
   medium: string;
 }
+let displayArtwork: Artwork;
 
 const $eyebutton = document.querySelector('.button-row') as HTMLDivElement;
 const $insertRowContainer = document.querySelector(
   '.artwork-row',
 ) as HTMLDivElement;
+const $holdsNoSaved = document.querySelector('.holds-no-saved');
+const $arteyeButton = document.querySelector('.btn');
+const $uList = document?.querySelector('ul');
+const $saveButton = document.querySelector('.saved-btn');
 
 function renderArtwork(displayArtwork: any): any {
   const outerDiv = document.createElement('div');
@@ -49,20 +54,14 @@ function renderArtwork(displayArtwork: any): any {
   medium.textContent = `Medium: ${displayArtwork.medium}`;
   div.appendChild(medium);
 
+  const heart = document.createElement('i');
+  heart.className = 'fa-regular fa-heart';
+  div.appendChild(heart);
+
   return outerDiv;
 }
 
 async function fetchRandomArtwork(): Promise<any> {
-  // {
-  //   id: string;
-  //   title: string;
-  //   artist: string;
-  //   place: string;
-  //   description: string;
-  //   imageUrl: string;
-  //   medium: string;
-  //   display: any;
-  // }[]
   const apiUrl = `https://api.artic.edu/api/v1/artworks?page=1&limit=100`;
 
   try {
@@ -84,7 +83,7 @@ async function fetchRandomArtwork(): Promise<any> {
         return;
       }
 
-      const displayArtwork = {
+      displayArtwork = {
         id: artwork.image_id,
         title: artwork.title,
         artist: artwork.artist_display,
@@ -115,5 +114,137 @@ function handleEyeClick(event: Event): any {
 window.addEventListener('DOMContentLoaded', handleDCL);
 
 function handleDCL(): void {
-  fetchRandomArtwork();
+  if (data.currentView === 'home') {
+    fetchRandomArtwork();
+  }
+}
+
+$insertRowContainer?.addEventListener('click', handleHeartClick);
+
+function handleHeartClick(event: Event): void {
+  const eventTarget = event.target as HTMLElement;
+  if (eventTarget.className === 'fa-regular fa-heart') {
+    const $heartButton = document.querySelector('.fa-heart');
+    if (!$heartButton) throw new Error('$heartButton does not exist');
+    $heartButton.className = 'fa-solid fa-heart';
+    // create Object with the properties we need
+    const artwork = {
+      id: displayArtwork.id,
+      title: displayArtwork.title,
+      artist: displayArtwork.artist,
+      description: displayArtwork.description,
+      imageUrl: displayArtwork.imageUrl,
+      medium: displayArtwork.medium,
+    };
+    data.savedArtworks.push(artwork);
+    saveToLocalStorage();
+  }
+}
+
+function openNav() {
+  document.getElementById('mySidenav').style.width = '250px';
+}
+
+function closeNav() {
+  document.getElementById('mySidenav').style.width = '0';
+}
+
+function viewSwap(viewName: 'home' | 'saved'): void {
+  const homeView = document.getElementById('home-view');
+  const savedView = document.getElementById('saved');
+  //   // Hide or show the appropriate view based on viewName
+  if (viewName === 'home') {
+    homeView?.classList.remove('hidden');
+    savedView?.classList.add('hidden');
+  } else if (viewName === 'saved') {
+    savedView?.classList.remove('hidden');
+    homeView?.classList.add('hidden');
+  }
+
+  // Update the view in the data model
+  data.currentView = viewName;
+  toggleNoSaved();
+}
+
+function toggleNoSaved(): void {
+  const localStorageArtwork = getFromLocalStorage();
+  if (localStorageArtwork.savedArtworks.length === 0) {
+    $holdsNoSaved?.classList.remove('hidden');
+  } else {
+    $holdsNoSaved?.classList.add('hidden');
+  }
+}
+
+function handleHomeClick(): void {
+  viewSwap('home');
+  closeNav();
+}
+
+$arteyeButton?.addEventListener('click', handleHomeClick);
+
+function renderSavedArtworks(): void {
+  const localStorageArtwork = getFromLocalStorage();
+  for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
+    const listItem = document.createElement('li');
+    listItem.className = 'list-item';
+
+    const title = document.createElement('h2');
+    title.textContent = localStorageArtwork.savedArtworks[i].title;
+    listItem.appendChild(title);
+
+    const artistName = document.createElement('h2');
+    artistName.textContent = localStorageArtwork.savedArtworks[i].artist;
+    listItem.appendChild(artistName);
+
+    const heart = document.createElement('i');
+    heart.className = 'fa-solid fa-heart';
+    listItem.appendChild(heart);
+
+    const image = document.createElement('img');
+    image.setAttribute('src', localStorageArtwork.savedArtworks[i].imageUrl);
+    image.setAttribute('alt', localStorageArtwork.savedArtworks[i].title);
+    listItem.appendChild(image);
+
+    $uList?.prepend(listItem);
+    toggleNoSaved();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', renderSavedArtworks);
+
+$saveButton?.addEventListener('click', handleSavedView);
+
+function handleSavedView(): void {
+  viewSwap('saved');
+  renderViewSwapSavedArtworks();
+  toggleNoSaved();
+}
+
+function renderViewSwapSavedArtworks(): void {
+  $uList.textContent = '';
+  const localStorageArtwork = getFromLocalStorage();
+  for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
+    const listItem = document.createElement('li');
+    listItem.className = 'list-item';
+
+    const title = document.createElement('h2');
+    title.textContent = localStorageArtwork.savedArtworks[i].title;
+    listItem.appendChild(title);
+
+    const artistName = document.createElement('h2');
+    artistName.textContent = localStorageArtwork.savedArtworks[i].artist;
+    listItem.appendChild(artistName);
+
+    const heart = document.createElement('i');
+    heart.className = 'fa-solid fa-heart';
+    listItem.appendChild(heart);
+
+    const image = document.createElement('img');
+    image.setAttribute('src', localStorageArtwork.savedArtworks[i].imageUrl);
+    image.setAttribute('alt', localStorageArtwork.savedArtworks[i].title);
+    listItem.appendChild(image);
+
+    $uList?.prepend(listItem);
+    toggleNoSaved();
+  }
 }

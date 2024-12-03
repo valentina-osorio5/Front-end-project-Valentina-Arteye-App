@@ -10,10 +10,56 @@ h2 {
   font-size: 1.5rem;
 }
 
+.no-saved {
+  font-family: 'Nova Round', serif;
+  font-weight: 400;
+  font-size: 2rem;
+  justify-self: center;
+}
+
 p {
   font-family: 'Nova Round', serif;
   font-weight: 400;
   font-size: 1rem;
+}
+
+.sidenav {
+  height: 15%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  color: white;
+  background-color: #009e89;
+  overflow-x: hidden;
+  padding-top: 60px;
+  transition: 0.5s;
+}
+
+.sidenav a {
+  padding: 10px;
+  text-decoration: none;
+  font-size: 25px;
+  display: block;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (height <= 450px) {
+  .sidenav {
+    padding-top: 15px;
+  }
+
+  .sidenav a {
+    font-size: 18px;
+  }
 }
 
 @media screen and (width >= 767px) {
