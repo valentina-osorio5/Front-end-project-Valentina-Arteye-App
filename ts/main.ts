@@ -113,12 +113,10 @@ async function fetchRandomArtwork(): Promise<any> {
 $eyebutton?.addEventListener('click', handleEyeClick);
 
 function handleEyeClick(event: Event): any {
+  console.log('handleEyeClicked');
   const eventTarget = event.target as SVGElement;
   if (eventTarget === null) throw new Error();
   if (eventTarget.tagName === 'svg') {
-    const $heartButton = document.querySelector('.fa-heart');
-    if (!$heartButton) throw new Error('$heartButton does not exist');
-    $heartButton.className = 'fa-regular fa-heart';
     $insertRowContainer.textContent = '';
     fetchRandomArtwork();
   }
@@ -130,15 +128,13 @@ window.addEventListener('DOMContentLoaded', handleDCL);
 function handleDCL(): void {
   if (data.currentView === 'home') {
     fetchRandomArtwork();
-    const $heartButton = document.querySelector('.fa-heart');
-    if (!$heartButton) throw new Error('$heartButton does not exist');
-    $heartButton.className = 'fa-regular fa-heart';
   }
 }
 
 $insertRowContainer?.addEventListener('click', handleHeartClick);
 
 function handleHeartClick(event: Event): void {
+  console.log('handleheartclick');
   const eventTarget = event.target as HTMLElement;
   if (eventTarget.className === 'fa-regular fa-heart') {
     console.log('heart button clicked');
@@ -155,7 +151,6 @@ function handleHeartClick(event: Event): void {
       imageUrl: displayArtwork.imageUrl,
       medium: displayArtwork.medium,
     };
-    // data.savedArtworks.push(displayArtwork);
     data.savedArtworks.push(artwork);
     saveToLocalStorage();
   }
@@ -195,18 +190,19 @@ function toggleNoSaved(): void {
   }
 }
 
-function handleArteyeClick(): void {
-  console.log('arteye was clicked');
+function handleHomeClick(): void {
+  console.log('arteye/home was clicked');
   viewSwap('home');
+  closeNav();
 }
 
-$arteyeButton?.addEventListener('click', handleArteyeClick);
+$arteyeButton?.addEventListener('click', handleHomeClick);
 
 function renderSavedArtworks(): void {
   const localStorageArtwork = getFromLocalStorage();
   console.log(localStorageArtwork.savedArtworks);
   for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
-    console.log(localStorageArtwork.savedArtworks);
+    console.log(localStorageArtwork.savedArtworks[i]);
     const listItem = document.createElement('li');
     listItem.className = 'list-item';
 
@@ -227,7 +223,8 @@ function renderSavedArtworks(): void {
     image.setAttribute('alt', localStorageArtwork.savedArtworks[i].title);
     listItem.appendChild(image);
 
-    $uList?.append(listItem);
+    $uList?.prepend(listItem);
+    toggleNoSaved();
   }
 }
 
@@ -238,5 +235,37 @@ $saveButton?.addEventListener('click', handleSavedView);
 function handleSavedView(): void {
   console.log('save view clicked');
   viewSwap('saved');
+  renderViewSwapSavedArtworks();
   toggleNoSaved();
+}
+
+function renderViewSwapSavedArtworks(): void {
+  $uList.textContent = '';
+  const localStorageArtwork = getFromLocalStorage();
+  console.log(localStorageArtwork.savedArtworks);
+  for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
+    console.log(localStorageArtwork.savedArtworks[i]);
+    const listItem = document.createElement('li');
+    listItem.className = 'list-item';
+
+    const title = document.createElement('h2');
+    title.textContent = localStorageArtwork.savedArtworks[i].title;
+    listItem.appendChild(title);
+
+    const artistName = document.createElement('h2');
+    artistName.textContent = localStorageArtwork.savedArtworks[i].artist;
+    listItem.appendChild(artistName);
+
+    const heart = document.createElement('i');
+    heart.className = 'fa-solid fa-heart';
+    listItem.appendChild(heart);
+
+    const image = document.createElement('img');
+    image.setAttribute('src', localStorageArtwork.savedArtworks[i].imageUrl);
+    image.setAttribute('alt', localStorageArtwork.savedArtworks[i].title);
+    listItem.appendChild(image);
+
+    $uList?.prepend(listItem);
+    toggleNoSaved();
+  }
 }

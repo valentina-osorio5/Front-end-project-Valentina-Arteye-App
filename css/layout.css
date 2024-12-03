@@ -3,7 +3,7 @@
 }
 
 .container {
-  border: solid 3px red;
+  /* border: solid 3px red; */
   padding: 50px;
 }
 
@@ -61,10 +61,10 @@ a {
 
 .header {
   max-width: 100%;
-  border: solid 3px red;
-  display: flex;
+  border-bottom: 2px solid #ccc;
 
-  /* justify-self: center; */
+  /* border: solid 3px red; */
+  display: flex;
 }
 
 .fa-heart {
@@ -96,7 +96,8 @@ a {
   /* background-image: url('../images/frame\ smaller.png'); */
   background-size: contain;
   background-repeat: no-repeat;
-  border: solid 2px purple;
+
+  /* border: solid 2px purple; */
 }
 
 .one-fourth {

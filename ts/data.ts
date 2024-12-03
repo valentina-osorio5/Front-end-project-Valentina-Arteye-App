@@ -2,8 +2,6 @@
 
 const key = 'savedArtworks';
 
-
-
 const data = {
   savedArtworks: [] as {
     id: string;
