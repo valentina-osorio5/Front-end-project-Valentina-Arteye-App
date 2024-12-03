@@ -3,7 +3,6 @@
 }
 
 .container {
-  /* border: solid 3px red; */
   padding: 50px;
 }
 
@@ -46,24 +45,18 @@ a {
 .list-item img {
   width: 25%;
   height: auto;
-
-  /* margin-left: 20px;  */
-
-  /* object-fit: cover; Keep image aspect ratio */
 }
 
 .parent {
   display: flex;
-  flex-direction: column; /* Stack items vertically by default */
-  align-items: center; /* Center-align the content */
-  gap: 20px; /* Add some spacing between text and image */
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 .header {
   max-width: 100%;
   border-bottom: 2px solid #ccc;
-
-  /* border: solid 3px red; */
   display: flex;
 }
 
@@ -92,12 +85,8 @@ a {
 .three-fourths {
   width: 100%;
   height: auto;
-
-  /* background-image: url('../images/frame\ smaller.png'); */
   background-size: contain;
   background-repeat: no-repeat;
-
-  /* border: solid 2px purple; */
 }
 
 .one-fourth {
@@ -126,8 +115,6 @@ a {
 .button-row {
   justify-self: center;
   display: flex;
-
-  /* border: 2px solid purple; */
 }
 
 @media screen and (width >= 768px) {
