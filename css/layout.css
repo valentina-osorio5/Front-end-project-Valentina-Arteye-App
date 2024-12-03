@@ -5,23 +5,46 @@
 .container {
   border: solid 3px red;
   padding: 50px;
-
-  /* justify-self: center; */
-}
-
-.list-item h2 {
-  /* display: inline-flex;
-  /* align-items: center; */
-
-  /* margin: 0; */
 }
 
 li {
   list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+
+.list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.list-item .text-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.list-item h2 {
+  margin: 5px 0;
+}
+
+.list-item .fa-heart {
+  margin: 10px;
 }
 
 .list-item img {
-  width: 50%;
+  width: 25%;
+  height: auto;
+
+  /* margin-left: 20px;  */
+
+  /* object-fit: cover; Keep image aspect ratio */
 }
 
 .parent {

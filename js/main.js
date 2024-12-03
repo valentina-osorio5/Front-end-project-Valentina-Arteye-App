@@ -182,7 +182,7 @@ function renderSavedArtworks() {
         const image = document.createElement('img');
         image.setAttribute('src', localStorageArtwork.savedArtworks[i].imageUrl);
         image.setAttribute('alt', localStorageArtwork.savedArtworks[i].title);
-        // return listItem;
+        listItem.appendChild(image);
         $uList?.append(listItem);
     }
 }
