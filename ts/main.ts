@@ -19,6 +19,9 @@ const $saveButton = document.querySelector('.saved-btn');
 const $dialog = document.querySelector('.dialog') as HTMLDialogElement;
 const $cancelDelete = document.querySelector('.cancel-delete');
 const $deleteSaved = document.querySelector('.confirm-delete');
+const $modal2 = document.querySelector('.dialog2');
+const $cancelDelete2 = document.querySelector('.cancel-delete2');
+const $deleteSaved2 = document.querySelector('.confirm-delete2');
 
 function renderArtwork(displayArtwork: any): any {
   const outerDiv = document.createElement('div');
@@ -50,6 +53,7 @@ function renderArtwork(displayArtwork: any): any {
   div.appendChild(artistName);
 
   const description = document.createElement('p');
+  // have to filter for the <p>
   description.textContent = displayArtwork.description;
   div.appendChild(description);
 
@@ -150,6 +154,7 @@ function handleHeartClick(event: Event): void {
         };
         data.savedArtworks.push(artwork);
         saveToLocalStorage();
+        toggleNoSaved();
       }
     }
   }
@@ -197,7 +202,12 @@ function confirmSavedDelete(event: Event): void {
   const $title = $li?.querySelector('h2');
   console.log('$title', $title);
   if (eventTarget?.tagName === 'I') {
-    // $dialog?.showModal();
+    const tempModal = confirm(
+      'Are you sure you want to delete from favorites?',
+    );
+    if (!tempModal) {
+      return;
+    }
     $li?.remove();
     console.log('$li removed');
     const localStorageArtwork = getFromLocalStorage();
