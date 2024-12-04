@@ -127,27 +127,30 @@ $insertRowContainer?.addEventListener('click', handleHeartClick);
 let totalClicks = 0;
 
 function handleHeartClick(event: Event): void {
-  totalClicks++;
-  console.log('totalClicks', totalClicks);
-  if (totalClicks % 2 === 0) {
-    $dialog?.showModal();
-  } else {
-    const eventTarget = event.target as HTMLElement;
-    if (eventTarget.className === 'fa-regular fa-heart') {
-      const $heartButton = document.querySelector('.fa-heart');
-      if (!$heartButton) throw new Error('$heartButton does not exist');
-      $heartButton.className = 'fa-solid fa-heart';
-      // create Object with the properties we need
-      const artwork = {
-        id: displayArtwork.id,
-        title: displayArtwork.title,
-        artist: displayArtwork.artist,
-        description: displayArtwork.description,
-        imageUrl: displayArtwork.imageUrl,
-        medium: displayArtwork.medium,
-      };
-      data.savedArtworks.push(artwork);
-      saveToLocalStorage();
+  const eventTarget = event.target as HTMLElement;
+  if (eventTarget?.tagName === 'I') {
+    totalClicks++;
+    // console.log('totalClicks', totalClicks);
+    if (totalClicks % 2 === 0) {
+      $dialog?.showModal();
+    } else {
+      const eventTarget = event.target as HTMLElement;
+      if (eventTarget.className === 'fa-regular fa-heart') {
+        const $heartButton = document.querySelector('.fa-heart');
+        if (!$heartButton) throw new Error('$heartButton does not exist');
+        $heartButton.className = 'fa-solid fa-heart';
+        // create Object with the properties we need
+        const artwork = {
+          id: displayArtwork.id,
+          title: displayArtwork.title,
+          artist: displayArtwork.artist,
+          description: displayArtwork.description,
+          imageUrl: displayArtwork.imageUrl,
+          medium: displayArtwork.medium,
+        };
+        data.savedArtworks.push(artwork);
+        saveToLocalStorage();
+      }
     }
   }
 }
@@ -186,16 +189,6 @@ function confirmDelete(event: Event): void {
 
 $uList?.addEventListener('click', confirmSavedDelete);
 
-// create variable eventTarget set to event.target.
-// query closest h2 element from eventTarget and save to variable title
-// check that a tagName === ‘I’
-// query closest li match to eventTarget and save to a variable
-// delete that variable in the DOM
-// loop over data.savedArtworks
-// check if data.savedArtworks[i].title === title
-//  splice i from data.savedArtworks
-// console log through each of these steps
-
 function confirmSavedDelete(event: Event): void {
   const eventTarget = event.target as HTMLElement;
   console.log(eventTarget);
@@ -208,11 +201,12 @@ function confirmSavedDelete(event: Event): void {
     $li?.remove();
     console.log('$li removed');
     const localStorageArtwork = getFromLocalStorage();
-    console.log(localStorageArtwork.savedArtworks);
-    for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
-      console.log($title);
-      console.log('data.saved', localStorageArtwork.savedArtworks[i].title);
-      if (data.savedArtworks[i].title === String($title)) {
+    console.log(localStorageArtwork?.savedArtworks);
+    for (let i = 0; i < localStorageArtwork?.savedArtworks.length; i++) {
+      console.log('$title.textContent', $title?.textContent);
+      const $titleText = $title?.textContent;
+      // console.log('data.saved', localStorageArtwork?.savedArtworks[i].title);
+      if (localStorageArtwork?.savedArtworks[i].title === $titleText) {
         console.log('match found');
         data.savedArtworks.splice(i, 1);
         saveToLocalStorage();
