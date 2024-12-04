@@ -38,6 +38,10 @@ a {
   margin: 5px 0;
 }
 
+.list-item h3 {
+  margin: 5px 0;
+}
+
 .list-item .fa-heart {
   margin: 10px;
 }

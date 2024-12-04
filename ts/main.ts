@@ -17,6 +17,8 @@ const $arteyeButton = document.querySelector('.btn');
 const $uList = document?.querySelector('ul');
 const $saveButton = document.querySelector('.saved-btn');
 const $dialog = document.querySelector('.dialog') as HTMLDialogElement;
+const $cancelDelete = document.querySelector('.cancel-delete');
+const $deleteSaved = document.querySelector('.confirm-delete');
 
 function renderArtwork(displayArtwork: any): any {
   const outerDiv = document.createElement('div');
@@ -43,7 +45,7 @@ function renderArtwork(displayArtwork: any): any {
   title.textContent = displayArtwork.title;
   div.appendChild(title);
 
-  const artistName = document.createElement('h2');
+  const artistName = document.createElement('h3');
   artistName.textContent = displayArtwork.artist;
   div.appendChild(artistName);
 
@@ -129,7 +131,6 @@ function handleHeartClick(event: Event): void {
   console.log('totalClicks', totalClicks);
   if (totalClicks % 2 === 0) {
     $dialog?.showModal();
-    console.log('modal is supposed to show');
   } else {
     const eventTarget = event.target as HTMLElement;
     if (eventTarget.className === 'fa-regular fa-heart') {
@@ -147,6 +148,73 @@ function handleHeartClick(event: Event): void {
       };
       data.savedArtworks.push(artwork);
       saveToLocalStorage();
+    }
+  }
+}
+
+function closeModal(event: Event): void {
+  const eventTarget = event.target as HTMLButtonElement;
+  if (eventTarget.className === 'cancel-delete') {
+    $dialog?.close();
+  }
+}
+
+$cancelDelete?.addEventListener('click', closeModal);
+
+$deleteSaved?.addEventListener('click', confirmDelete);
+
+function confirmDelete(event: Event): void {
+  console.log('confirm delete firing');
+  const eventTarget = event.target as HTMLButtonElement;
+  if (eventTarget.className === 'confirm-delete') {
+    const artId = displayArtwork.id;
+    for (let i = 0; i < data.savedArtworks.length; i++) {
+      if (artId === data.savedArtworks[i].id) {
+        console.log('match found');
+        const $deleteElement = document.querySelector('.parent');
+        $deleteElement?.remove();
+        data.savedArtworks.splice(i, 1);
+        saveToLocalStorage();
+      }
+    }
+    // toggleNoSaved();
+    // const viewName = data.currentView;
+    // viewSwap(viewName);
+    $dialog?.close();
+  }
+}
+
+$uList?.addEventListener('click', confirmSavedDelete);
+
+// create variable eventTarget set to event.target.
+// query closest h2 element from eventTarget and save to variable title
+// check that a tagName === ‘I’
+// query closest li match to eventTarget and save to a variable
+// delete that variable in the DOM
+// loop over data.savedArtworks
+// check if data.savedArtworks[i].title === title
+//  splice i from data.savedArtworks
+// console log through each of these steps
+
+function confirmSavedDelete(event: Event): void {
+  const eventTarget = event.target as HTMLElement;
+  console.log(eventTarget);
+  const $li = eventTarget.closest('li');
+  console.log('$li', $li);
+  const $title = $li?.querySelector('h2');
+  console.log('$title', $title);
+  if (eventTarget?.tagName === 'I') {
+    console.log('going into this code block');
+    // $dialog?.showModal();
+    $li?.remove();
+    console.log('$li removed');
+    for (let i = 0; i < data.savedArtworks.length; i++) {
+      console.log('initiating loop');
+      if (data.savedArtworks[i].title === title) {
+        console.log('match found');
+        data.savedArtworks.splice(i, 1);
+        saveToLocalStorage();
+      }
     }
   }
 }
@@ -202,7 +270,7 @@ function renderSavedArtworks(): void {
     title.textContent = localStorageArtwork.savedArtworks[i].title;
     listItem.appendChild(title);
 
-    const artistName = document.createElement('h2');
+    const artistName = document.createElement('h3');
     artistName.textContent = localStorageArtwork.savedArtworks[i].artist;
     listItem.appendChild(artistName);
 
@@ -241,7 +309,7 @@ function renderViewSwapSavedArtworks(): void {
     title.textContent = localStorageArtwork.savedArtworks[i].title;
     listItem.appendChild(title);
 
-    const artistName = document.createElement('h2');
+    const artistName = document.createElement('h3');
     artistName.textContent = localStorageArtwork.savedArtworks[i].artist;
     listItem.appendChild(artistName);
 
