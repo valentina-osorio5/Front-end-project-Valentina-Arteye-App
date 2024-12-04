@@ -10,7 +10,7 @@ h2 {
   font-size: 1.5rem;
 }
 
-h3{
+h3 {
   font-family: 'Nova Round', serif;
   font-weight: 400;
   font-size: 1.5rem;
@@ -107,6 +107,10 @@ p {
   p {
     font-size: 1.5rem;
   }
+
+  a {
+    font-size: 1.5 rem;
+  }
 }
 
 @media screen and (width >= 1200px) {
@@ -125,6 +129,10 @@ p {
   p {
     font-family: 'Nova Round', serif;
     font-weight: 400;
+    font-size: 18px;
+  }
+
+  a {
     font-size: 18px;
   }
 }

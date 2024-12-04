@@ -32,7 +32,6 @@ function renderArtwork(displayArtwork) {
     artistName.textContent = displayArtwork.artist;
     div.appendChild(artistName);
     const description = document.createElement('p');
-    // have to filter for the <p>
     description.innerHTML = displayArtwork.description;
     div.appendChild(description);
     const medium = document.createElement('p');
@@ -44,7 +43,7 @@ function renderArtwork(displayArtwork) {
     return outerDiv;
 }
 async function fetchRandomArtwork() {
-    const apiUrl = `https://api.artic.edu/api/v1/artworks?page=1&limit=100`;
+    const apiUrl = `https://api.artic.edu/api/v1/artworks?page=2&limit=100`;
     try {
         const response = await fetch(apiUrl);
         if (!response.ok) {
@@ -57,8 +56,11 @@ async function fetchRandomArtwork() {
             const randomIndex = Math.floor(Math.random() * artworks.length);
             const artwork = artworks[randomIndex];
             const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`;
-            console.log('Image URL:', imageUrl);
             if (!artwork.image_id) {
+                fetchRandomArtwork();
+                return;
+            }
+            if (!imageUrl) {
                 fetchRandomArtwork();
                 return;
             }
@@ -101,7 +103,6 @@ function handleHeartClick(event) {
     const eventTarget = event.target;
     if (eventTarget?.tagName === 'I') {
         totalClicks++;
-        // console.log('totalClicks', totalClicks);
         if (totalClicks % 2 === 0) {
             $dialog?.showModal();
         }
@@ -137,13 +138,11 @@ function closeModal(event) {
 $cancelDelete?.addEventListener('click', closeModal);
 $deleteSaved?.addEventListener('click', confirmDelete);
 function confirmDelete(event) {
-    console.log('confirm delete firing');
     const eventTarget = event.target;
     if (eventTarget.className === 'confirm-delete') {
         const artId = displayArtwork.id;
         for (let i = 0; i < data.savedArtworks.length; i++) {
             if (artId === data.savedArtworks[i].id) {
-                console.log('match found');
                 const $deleteElement = document.querySelector('.parent');
                 $deleteElement?.remove();
                 data.savedArtworks.splice(i, 1);
@@ -159,26 +158,18 @@ function confirmDelete(event) {
 $uList?.addEventListener('click', confirmSavedDelete);
 function confirmSavedDelete(event) {
     const eventTarget = event.target;
-    console.log(eventTarget);
     const $li = eventTarget.closest('li');
-    console.log('$li', $li);
     const $title = $li?.querySelector('h2');
-    console.log('$title', $title);
     if (eventTarget?.tagName === 'I') {
         const tempModal = confirm('Are you sure you want to delete from favorites?');
         if (!tempModal) {
             return;
         }
         $li?.remove();
-        console.log('$li removed');
         const localStorageArtwork = getFromLocalStorage();
-        console.log(localStorageArtwork?.savedArtworks);
         for (let i = 0; i < localStorageArtwork?.savedArtworks.length; i++) {
-            console.log('$title.textContent', $title?.textContent);
             const $titleText = $title?.textContent;
-            // console.log('data.saved', localStorageArtwork?.savedArtworks[i].title);
             if (localStorageArtwork?.savedArtworks[i].title === $titleText) {
-                console.log('match found');
                 data.savedArtworks.splice(i, 1);
                 saveToLocalStorage();
             }
@@ -194,13 +185,16 @@ function closeNav() {
 function viewSwap(viewName) {
     const homeView = document.getElementById('home-view');
     const savedView = document.getElementById('saved');
+    const thankYou = document.getElementById('thank-you');
     //   // Hide or show the appropriate view based on viewName
     if (viewName === 'home') {
         homeView?.classList.remove('hidden');
         savedView?.classList.add('hidden');
+        thankYou?.classList.add('hidden');
     }
     else if (viewName === 'saved') {
         savedView?.classList.remove('hidden');
+        thankYou?.classList.remove('hidden');
         homeView?.classList.add('hidden');
     }
     // Update the view in the data model
