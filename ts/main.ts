@@ -204,13 +204,15 @@ function confirmSavedDelete(event: Event): void {
   const $title = $li?.querySelector('h2');
   console.log('$title', $title);
   if (eventTarget?.tagName === 'I') {
-    console.log('going into this code block');
     // $dialog?.showModal();
     $li?.remove();
     console.log('$li removed');
-    for (let i = 0; i < data.savedArtworks.length; i++) {
-      console.log('initiating loop');
-      if (data.savedArtworks[i].title === title) {
+    const localStorageArtwork = getFromLocalStorage();
+    console.log(localStorageArtwork.savedArtworks);
+    for (let i = 0; i < localStorageArtwork.savedArtworks.length; i++) {
+      console.log($title);
+      console.log('data.saved', localStorageArtwork.savedArtworks[i].title);
+      if (data.savedArtworks[i].title === String($title)) {
         console.log('match found');
         data.savedArtworks.splice(i, 1);
         saveToLocalStorage();
