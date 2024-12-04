@@ -147,6 +147,7 @@ function confirmDelete(event) {
                 $deleteElement?.remove();
                 data.savedArtworks.splice(i, 1);
                 saveToLocalStorage();
+                fetchRandomArtwork();
             }
         }
         // toggleNoSaved();

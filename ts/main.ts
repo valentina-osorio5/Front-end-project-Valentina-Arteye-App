@@ -182,6 +182,7 @@ function confirmDelete(event: Event): void {
         $deleteElement?.remove();
         data.savedArtworks.splice(i, 1);
         saveToLocalStorage();
+        fetchRandomArtwork();
       }
     }
     // toggleNoSaved();
