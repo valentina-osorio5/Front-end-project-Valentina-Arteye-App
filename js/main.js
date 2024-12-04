@@ -9,9 +9,6 @@ const $saveButton = document.querySelector('.saved-btn');
 const $dialog = document.querySelector('.dialog');
 const $cancelDelete = document.querySelector('.cancel-delete');
 const $deleteSaved = document.querySelector('.confirm-delete');
-const $modal2 = document.querySelector('.dialog2');
-const $cancelDelete2 = document.querySelector('.cancel-delete2');
-const $deleteSaved2 = document.querySelector('.confirm-delete2');
 function renderArtwork(displayArtwork) {
     const outerDiv = document.createElement('div');
     outerDiv.className = 'parent';
@@ -35,8 +32,8 @@ function renderArtwork(displayArtwork) {
     artistName.textContent = displayArtwork.artist;
     div.appendChild(artistName);
     const description = document.createElement('p');
-    //have to filter for the <p> 
-    description.textContent = displayArtwork.description;
+    // have to filter for the <p>
+    description.innerHTML = displayArtwork.description;
     div.appendChild(description);
     const medium = document.createElement('p');
     medium.textContent = `Medium: ${displayArtwork.medium}`;
@@ -60,6 +57,7 @@ async function fetchRandomArtwork() {
             const randomIndex = Math.floor(Math.random() * artworks.length);
             const artwork = artworks[randomIndex];
             const imageUrl = `https://www.artic.edu/iiif/2/${artwork.image_id}/full/843,/0/default.jpg`;
+            console.log('Image URL:', imageUrl);
             if (!artwork.image_id) {
                 fetchRandomArtwork();
                 return;

@@ -13,10 +13,18 @@ li {
   padding: 10px;
 }
 
-a {
+.sidenav a {
   color: white;
   font-family: 'Nova Round', serif;
   font-size: 2rem;
+}
+
+a {
+  color: black;
+  text-decoration: underline #359e89;
+  font-family: 'Nova Round', serif;
+  font-weight: 400;
+  font-size: 1rem;
 }
 
 .list-item {
