@@ -10,6 +10,12 @@ h2 {
   font-size: 1.5rem;
 }
 
+h3 {
+  font-family: 'Nova Round', serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+}
+
 .no-saved {
   font-family: 'Nova Round', serif;
   font-weight: 400;
@@ -52,6 +58,33 @@ p {
   margin-left: 50px;
 }
 
+.modal-text {
+  width: 100%;
+  font-size: 2rem;
+}
+
+.dialog {
+  width: 600px;
+  border: 1 px black;
+  border-radius: 10px;
+  background-color: #359e89;
+}
+
+.cancel-delete {
+  background-color: #a0144c;
+  color: white;
+  float: right;
+  font-size: 25px;
+  border-radius: 7px;
+}
+
+.confirm-delete {
+  background-color: #3c9e20;
+  color: white;
+  font-size: 25px;
+  border-radius: 7px;
+}
+
 @media screen and (height <= 450px) {
   .sidenav {
     padding-top: 15px;
@@ -74,6 +107,10 @@ p {
   p {
     font-size: 1.5rem;
   }
+
+  a {
+    font-size: 1.5 rem;
+  }
 }
 
 @media screen and (width >= 1200px) {
@@ -92,6 +129,10 @@ p {
   p {
     font-family: 'Nova Round', serif;
     font-weight: 400;
+    font-size: 18px;
+  }
+
+  a {
     font-size: 18px;
   }
 }
